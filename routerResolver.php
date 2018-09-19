@@ -10,12 +10,6 @@ class RouterResolver
         '/:lang/products/:id/images/[/:imageId]' => '([a-z]{2})\/(products)\/([0-9]+)\/(images)\/?([0-9]+)?',
     ];
 
-    private $validActions = [
-        'products' => 'id',
-        'compare'  => 'compareId',
-        'images'   => 'imageId',
-    ];
-
     private $langRouteDepth = 1;
     private $action1RouteDepth = 2;
     private $action2RouteDepth = 4;
@@ -28,34 +22,23 @@ class RouterResolver
 
         $this->setUrl($url);
         $path = $this->getPath();
-        $parameters = $this->getParameters($path, $template);
 
-        if ($this->isValidUrl($path, $parameters))
+        if ($this->isValidUrl())
         {
             $data = [
                 'scheme'     => $this->getScheme(),
                 'host'       => $this->getHost(),
                 'path'       => $path,
-                'parameters' => $parameters,
+                'parameters' => $this->getParameters($path, $template),
             ];
         }
 
         return $this->buildOutput($data);
     }
 
-    private function isValidUrl($path, $parameters)
+    private function isValidUrl()
     {
-        if (!parse_url($this->getUrl(), PHP_URL_SCHEME))
-        {
-            return false;
-        }
-
-        if (empty($parameters) && $path !== '/')
-        {
-            return false;
-        }
-
-        return true;
+        return parse_url($this->getUrl(), PHP_URL_SCHEME) ? true : false;
     }
 
     private function templateHasPattern($template)
@@ -125,7 +108,18 @@ class RouterResolver
             return;
         }
 
-        $parameters[$this->validActions[$matches[$depth]]] = $matches[$depth + 1];
+        if ($matches[$depth] === 'products')
+        {
+            $parameters['id'] = $matches[$depth + 1];
+        }
+        if ($matches[$depth] === 'compare')
+        {
+            $parameters['compareId'] = $matches[$depth + 1];
+        }
+        if ($matches[$depth] === 'images')
+        {
+            $parameters['imageId'] = $matches[$depth + 1];
+        }
     }
 
     private function buildOutput($result)
