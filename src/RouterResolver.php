@@ -99,12 +99,12 @@ class RouterResolver
 
         if (\count($urlLevels) > $this->action1RouteDepth)
         {
-            $this->action($urlLevels, $this->action1RouteDepth, $parameters);
+            $this->matchingAction($urlLevels, $this->action1RouteDepth, $parameters);
         }
 
         if (\count($urlLevels) > $this->action2RouteDepth)
         {
-            $this->action($urlLevels, $this->action2RouteDepth, $parameters);
+            $this->matchingAction($urlLevels, $this->action2RouteDepth, $parameters);
         }
 
         return $parameters;
@@ -120,7 +120,7 @@ class RouterResolver
         $parameters['lang'] = $matches[$this->langRouteDepth];
     }
 
-    private function action($matches, $depth, &$parameters) : void
+    private function matchingAction($matches, $depth, &$parameters) : void
     {
         if (!isset($matches[$depth], $matches[$depth + 1]))
         {
