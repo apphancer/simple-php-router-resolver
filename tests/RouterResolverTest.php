@@ -1,9 +1,9 @@
 <?php
 
+namespace Tests;
+
 use PHPUnit\Framework\TestCase;
 use Src\RouterResolver;
-
-require_once __DIR__ . '/../src/RouterResolver.php';
 
 class RouterResolverTest extends TestCase
 {
@@ -11,6 +11,7 @@ class RouterResolverTest extends TestCase
 
     public function setUp()
     {
+        require_once __DIR__ . '/../src/RouterResolver.php';
         $this->resolver = new RouterResolver();
     }
 
@@ -36,7 +37,10 @@ class RouterResolverTest extends TestCase
             'parameters' => [],
         ];
 
-        $this->assertJsonStringEqualsJsonString($this->jsonEncode($expectedResult), $this->resolver->resolve($url, $template));
+        $this->assertJsonStringEqualsJsonString(
+            $this->jsonEncode($expectedResult),
+            $this->resolver->resolve($url, $template)
+        );
     }
 
     public function testHttpsHost()
@@ -51,7 +55,10 @@ class RouterResolverTest extends TestCase
             'parameters' => [],
         ];
 
-        $this->assertJsonStringEqualsJsonString($this->jsonEncode($expectedResult), $this->resolver->resolve($url, $template));
+        $this->assertJsonStringEqualsJsonString(
+            $this->jsonEncode($expectedResult),
+            $this->resolver->resolve($url, $template)
+        );
     }
 
     public function testLanguage()
@@ -66,7 +73,10 @@ class RouterResolverTest extends TestCase
             'parameters' => ['lang' => 'en'],
         ];
 
-        $this->assertJsonStringEqualsJsonString($this->jsonEncode($expectedResult), $this->resolver->resolve($url, $template));
+        $this->assertJsonStringEqualsJsonString(
+            $this->jsonEncode($expectedResult),
+            $this->resolver->resolve($url, $template)
+        );
 
         $url = 'http://www.example.com/eng';
         $template = '/:lang';
@@ -79,7 +89,10 @@ class RouterResolverTest extends TestCase
         ];
 
         $this->assertJsonStringEqualsJsonString($this->jsonEncode([]), $this->resolver->resolve($url, $template));
-        $this->assertJsonStringNotEqualsJsonString($this->jsonEncode($expectedResult), $this->resolver->resolve($url, $template));
+        $this->assertJsonStringNotEqualsJsonString(
+            $this->jsonEncode($expectedResult),
+            $this->resolver->resolve($url, $template)
+        );
 
         $url = 'http://www.example.com/1e';
         $template = '/:lang';
@@ -92,7 +105,10 @@ class RouterResolverTest extends TestCase
         ];
 
         $this->assertJsonStringEqualsJsonString($this->jsonEncode([]), $this->resolver->resolve($url, $template));
-        $this->assertJsonStringNotEqualsJsonString($this->jsonEncode($expectedResult), $this->resolver->resolve($url, $template));
+        $this->assertJsonStringNotEqualsJsonString(
+            $this->jsonEncode($expectedResult),
+            $this->resolver->resolve($url, $template)
+        );
     }
 
     public function testProductsList()
@@ -107,7 +123,10 @@ class RouterResolverTest extends TestCase
             'parameters' => ['lang' => 'en'],
         ];
 
-        $this->assertJsonStringEqualsJsonString($this->jsonEncode($expectedResult), $this->resolver->resolve($url, $template));
+        $this->assertJsonStringEqualsJsonString(
+            $this->jsonEncode($expectedResult),
+            $this->resolver->resolve($url, $template)
+        );
     }
 
     public function testProductId()
@@ -122,7 +141,10 @@ class RouterResolverTest extends TestCase
             'parameters' => ['lang' => 'en', 'id' => '22'],
         ];
 
-        $this->assertJsonStringEqualsJsonString($this->jsonEncode($expectedResult), $this->resolver->resolve($url, $template));
+        $this->assertJsonStringEqualsJsonString(
+            $this->jsonEncode($expectedResult),
+            $this->resolver->resolve($url, $template)
+        );
     }
 
     public function testProductIdCompareId()
@@ -137,7 +159,10 @@ class RouterResolverTest extends TestCase
             'parameters' => ['lang' => 'en', 'id' => '22', 'compareId' => '33'],
         ];
 
-        $this->assertJsonStringEqualsJsonString($this->jsonEncode($expectedResult), $this->resolver->resolve($url, $template));
+        $this->assertJsonStringEqualsJsonString(
+            $this->jsonEncode($expectedResult),
+            $this->resolver->resolve($url, $template)
+        );
     }
 
     public function testProductImages()
@@ -152,7 +177,10 @@ class RouterResolverTest extends TestCase
             'parameters' => ['lang' => 'en', 'id' => '22'],
         ];
 
-        $this->assertJsonStringEqualsJsonString($this->jsonEncode($expectedResult), $this->resolver->resolve($url, $template));
+        $this->assertJsonStringEqualsJsonString(
+            $this->jsonEncode($expectedResult),
+            $this->resolver->resolve($url, $template)
+        );
     }
 
 
@@ -168,7 +196,10 @@ class RouterResolverTest extends TestCase
             'parameters' => ['lang' => 'en', 'id' => '22', 'imageId' => '44'],
         ];
 
-        $this->assertJsonStringEqualsJsonString($this->jsonEncode($expectedResult), $this->resolver->resolve($url, $template));
+        $this->assertJsonStringEqualsJsonString(
+            $this->jsonEncode($expectedResult),
+            $this->resolver->resolve($url, $template)
+        );
     }
 
     public function testInvalidParameter()

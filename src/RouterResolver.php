@@ -32,8 +32,7 @@ class RouterResolver
         $path = $this->getPath();
         $parameters = $this->getParameters($path, $template);
 
-        if ($this->isValidUrl($path, $parameters))
-        {
+        if ($this->isValidUrl($path, $parameters)) {
             $data = [
                 'scheme'     => $this->getScheme(),
                 'host'       => $this->getHost(),
@@ -47,13 +46,11 @@ class RouterResolver
 
     private function isValidUrl($path, $parameters) : bool
     {
-        if (!parse_url($this->getUrl(), PHP_URL_SCHEME))
-        {
+        if (!parse_url($this->getUrl(), PHP_URL_SCHEME)) {
             return false;
         }
 
-        if (empty($parameters) && $path !== '/')
-        {
+        if (empty($parameters) && $path !== '/') {
             return false;
         }
 
@@ -90,20 +87,17 @@ class RouterResolver
         $parameters = [];
         $urlLevels = [];
 
-        if ($this->templateHasPattern($template))
-        {
+        if ($this->templateHasPattern($template)) {
             preg_match($this->getTemplatePattern($template), $path, $urlLevels);
         }
 
         $this->language($urlLevels, $parameters);
 
-        if (\count($urlLevels) > $this->action1RouteDepth)
-        {
+        if (\count($urlLevels) > $this->action1RouteDepth) {
             $this->matchingAction($urlLevels, $this->action1RouteDepth, $parameters);
         }
 
-        if (\count($urlLevels) > $this->action2RouteDepth)
-        {
+        if (\count($urlLevels) > $this->action2RouteDepth) {
             $this->matchingAction($urlLevels, $this->action2RouteDepth, $parameters);
         }
 
@@ -112,8 +106,7 @@ class RouterResolver
 
     private function language($matches, &$parameters) : void
     {
-        if (!isset($matches[$this->langRouteDepth]))
-        {
+        if (!isset($matches[$this->langRouteDepth])) {
             return;
         }
 
@@ -122,8 +115,7 @@ class RouterResolver
 
     private function matchingAction($matches, $depth, &$parameters) : void
     {
-        if (!isset($matches[$depth], $matches[$depth + 1]))
-        {
+        if (!isset($matches[$depth], $matches[$depth + 1])) {
             return;
         }
 
